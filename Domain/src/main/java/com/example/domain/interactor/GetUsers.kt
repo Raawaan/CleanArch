@@ -6,8 +6,8 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 
 class GetUsers(private val repo: UsersRepo,
-               scheduler: Scheduler):ObservableUseCase<List<UserData>,Nothing>(scheduler){
-    override fun buildUseCaseObservable(params: Nothing?): Observable<List<UserData>> {
+               scheduler: Scheduler):ObservableUseCase<List<UserData>,Unit>(scheduler){
+    override fun  buildUseCaseObservable(params: Unit?): Observable<List<UserData>> {
        return repo.getUsersData()
     }
 }

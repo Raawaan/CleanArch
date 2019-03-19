@@ -8,9 +8,9 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-abstract class ObservableUseCase<T,in E>(val scheduler: Scheduler){
+abstract class ObservableUseCase<T,in E>(private val scheduler: Scheduler){
     private val disposables:CompositeDisposable=CompositeDisposable()
-    protected abstract fun buildUseCaseObservable(params:E?=null):Observable<T>
+     abstract fun buildUseCaseObservable(params:E?=null):Observable<T>
     open fun execute(observer: DisposableObserver<T>,params: E?=null){
         val observable=this.buildUseCaseObservable(params)
             .subscribeOn(Schedulers.io())

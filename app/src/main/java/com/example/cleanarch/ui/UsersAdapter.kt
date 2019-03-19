@@ -9,8 +9,9 @@ import com.example.cleanarch.model.UsersDataUI
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_of_items.view.*
 
-class UsersAdapter(private val stationsList: List<UsersDataUI>?)
+class UsersAdapter
     : RecyclerView.Adapter<UsersAdapter.StationHolderView>(){
+     var stationsList: List<UsersDataUI>? = listOf()
     open class StationHolderView(itemView: View): RecyclerView.ViewHolder(itemView){}
     override fun onBindViewHolder(holder: StationHolderView, position: Int) {
         val listOfUsers = stationsList?.get(position)

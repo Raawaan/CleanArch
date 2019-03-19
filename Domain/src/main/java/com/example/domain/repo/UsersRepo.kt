@@ -5,4 +5,5 @@ import io.reactivex.Observable
 
 interface UsersRepo{
     fun getUsersData():Observable<List<UserData>>
+    fun getUsersDataKtor():List<UserData>
 }

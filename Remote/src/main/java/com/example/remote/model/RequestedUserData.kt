@@ -1,12 +1,10 @@
 package com.example.remote.model
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
-data class RequestedUserData(@SerializedName("name")
-                                     var name:String,
-                                     @SerializedName("id")
-                                     var email:String,
-                                     @SerializedName("icon")
+@Serializable
+data class RequestedUserData(var name:String,
+                                     var id:String,
                                      var icon:String,
-                                     @SerializedName("cat")
-                                     var category:String)
+                                     var cat:String)

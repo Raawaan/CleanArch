@@ -4,6 +4,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlinVersion"
     implementation "io.reactivex.rxjava2:rxkotlin:$rootProject.ext.rxkotlinVersion"
+    testImplementation 'junit:junit:4.12'
+    implementation 'org.mockito:mockito-inline:2.24.5'
     compile project(':Domain')
 }
 

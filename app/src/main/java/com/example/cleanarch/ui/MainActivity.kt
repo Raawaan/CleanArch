@@ -7,38 +7,35 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.example.cleanarch.R
-import com.example.cleanarch.provider.RepoProvider
 import com.example.cleanarch.viewModel.GetUserViewModel
 import com.example.domain.interactor.GetUsers
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import android.arch.lifecycle.ViewModel
 import com.example.cleanarch.mapper.MapToUIUserData
+import com.example.data.UserDataRepo
+import com.example.domain.interactor.GetUserKtor
+import io.ktor.http.parametersOf
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var viewModel:GetUserViewModel
-    private lateinit var usersAdapter: UsersAdapter
+    private val mapToUIUserData:MapToUIUserData by inject()
+    private val viewModel:GetUserViewModel by viewModel()
+    private val usersAdapter: UsersAdapter by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel = ViewModelProviders.of(this,viewModelFactory()).get(GetUserViewModel::class.java)
         viewModel.getUsers().observe(this, Observer {
-            usersAdapter= UsersAdapter(it?.map { userData ->
-                                MapToUIUserData.fromRequestedDataToUserEntity(userData)
-                            })
-         rvListOfUsers.adapter=usersAdapter
+            usersAdapter.stationsList=it?.map { userData ->
+                mapToUIUserData.fromRequestedDataToUserEntity(userData)
+            }
+            rvListOfUsers.adapter=usersAdapter
         })
+//        viewModel.fetchDataKtor()
         viewModel.fetchData()
         rvListOfUsers.layoutManager = LinearLayoutManager(this)
-    }
-    private fun viewModelFactory():ViewModelProvider.Factory{
-       return object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return GetUserViewModel(
-                    GetUsers(RepoProvider.getRepo(), AndroidSchedulers.mainThread())
-                ) as T
-            }
-        }
     }
 }
